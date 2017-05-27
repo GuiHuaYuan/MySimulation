@@ -1,2 +1,0 @@
-coverage.SnowDBRecord
-coverage.SnowDataBase
