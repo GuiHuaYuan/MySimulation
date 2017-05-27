@@ -26,7 +26,7 @@ import javax.imageio.ImageIO;
 public class Access {
     
     public Access() {
-        System.out.println("1277120515");
+        System.out.println("This is master");
     }
 
     //¾­¶È£º70-140  50~160     Î³¶È£º15-55
