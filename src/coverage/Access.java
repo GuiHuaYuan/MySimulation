@@ -26,6 +26,7 @@ import javax.imageio.ImageIO;
 public class Access {
     
     public Access() {
+        System.out.println("");
     }
 
     //¾­¶È£º70-140  50~160     Î³¶È£º15-55
