@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="SJ-9B" cn="实践九号B星" extraInfo="">
+    <commonInfo>
+        <launch>2012-10-14</launch>
+        <retire></retire>
+        <designLife>3.0</designLife>
+        <country>中国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>645.0</orbitAltitude>
+            <orbitInclination>97.98</orbitInclination>
+            <orbitPeriod>97.5</orbitPeriod>
+            <repeatCycle>69.0</repeatCycle>
+            <lst>10:30</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <osculatingElement>
+			  	<orbitParameter>
+			    	<epochTime>0.0</epochTime>
+						<orbitNum>0.0</orbitNum>
+			    	<semiMajorAxis>0.0</semiMajorAxis>
+						<eccentricity>0.0</eccentricity>
+						<inclination>0.0</inclination>
+						<raan>0.0</raan>
+						<argumentPerigee>0.0</argumentPerigee>
+						<meanAnomaly>0.0</meanAnomaly>
+					</orbitParameter>
+					<dynamicParameter>
+			    	<maximumDegree>0.0</maximumDegree>
+						<maximumOrder>0.0</maximumOrder>
+            <mass>0.0</mass>
+						<areaDrag>0.0</areaDrag>
+						<cd>0.0</cd>
+						<f10_7>0.0</f10_7>
+						<f10_7m>0.0</f10_7m>
+						<kp>0.0</kp>
+            <areaSrp>0.0</areaSrp>
+						<cr>0.0</cr>
+					</dynamicParameter>
+				</osculatingElement>
+        <tle>
+            <id>38861</id>
+            <name>SJ-9B</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="3" sideMin="-15.0" sideMax="15.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="1">
+        <sensor name="IR" cn="长波红外相机" type="0">
+            <fov>1.6</fov>
+            <swath>18.0</swath>
+            <scanColor>ORANGE</scanColor>
+            <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">
+                <mode name="IR" cn="红外">
+                    <resolution>73.0</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>8.0</bandMin>
+                            <bandMax>12.0</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

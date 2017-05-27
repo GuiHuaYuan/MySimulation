@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="CBERS4" cn="CBERS4" extraInfo="">
+    <commonInfo>
+        <launch>2014-12-7</launch>
+        <retire></retire>
+        <designLife>5.0</designLife>
+        <country>中国巴西</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>778</orbitAltitude>
+            <orbitInclination>98.5</orbitInclination>
+            <orbitPeriod>100.38</orbitPeriod>
+            <repeatCycle>26.0</repeatCycle>
+            <lst></lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <osculatingElement>
+			  	<orbitParameter>
+			    	<epochTime>0.0</epochTime>
+						<orbitNum>0.0</orbitNum>
+			    	<semiMajorAxis>0.0</semiMajorAxis>
+						<eccentricity>0.0</eccentricity>
+						<inclination>0.0</inclination>
+						<raan>0.0</raan>
+						<argumentPerigee>0.0</argumentPerigee>
+						<meanAnomaly>0.0</meanAnomaly>
+					</orbitParameter>
+					<dynamicParameter>
+			    	<maximumDegree>0.0</maximumDegree>
+						<maximumOrder>0.0</maximumOrder>
+            <mass>0.0</mass>
+						<areaDrag>0.0</areaDrag>
+						<cd>0.0</cd>
+						<f10_7>0.0</f10_7>
+						<f10_7m>0.0</f10_7m>
+						<kp>0.0</kp>
+            <areaSrp>0.0</areaSrp>
+						<cr>0.0</cr>
+					</dynamicParameter>
+				</osculatingElement>
+        <tle>
+            <id>40336</id>
+            <name>CBERS4</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="111">
+        <sensor name="PAN" cn="PAN" type="0">
+            <fov>4.4</fov>
+            <swath>60.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="3" sideMin="-32.0" sideMax="32.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">
+                <mode name="PAN" cn="PAN">
+                    <resolution>5</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.5</bandMin>
+                            <bandMax>0.85</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+                <mode name="MS" cn="MS">
+                    <resolution>10</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.52</bandMin>
+                            <bandMax>0.59</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.63</bandMin>
+                            <bandMax>0.69</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.77</bandMin>
+                            <bandMax>0.89</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+         </sensor>
+        <sensor name="MUX" cn="MUX" type="0">
+            <fov>8.817</fov>
+            <swath>120.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+             <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+             <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">  
+                <mode name="MS" cn="MS">
+                    <resolution>20</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.45</bandMin>
+                            <bandMax>0.52</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.52</bandMin>
+                            <bandMax>0.59</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.63</bandMin>
+                            <bandMax>0.69</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>0.77</bandMin>
+                            <bandMax>0.89</bandMax>
+                        </band>
+                     </bandList>
+                </mode> 
+              </modeList>
+        </sensor>     
+        <sensor name="IRS" cn="IRS" type="0">
+            <fov>8.817</fov>
+            <swath>120.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0"> 
+                <mode name="IRS" cn="IRS">
+                    <resolution>40</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.496</bandMin>
+                            <bandMax>0.918</bandMax>
+                        </band>            
+                       <band id="2">
+                            <bandMin>1.54</bandMin>
+                            <bandMax>1.74</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>2.06</bandMin>
+                            <bandMax>2.33</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>10.36</bandMin>
+                            <bandMax>12.46</bandMax>
+                        </band>
+                    </bandList>
+                </mode>             
+            </modeList>
+        </sensor>
+        <sensor name="WFI" cn="WFI" type="0">
+            <fov>63.63</fov>
+            <swath>866.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0"> 
+                <mode name="WFI" cn="WFI">
+                    <resolution>73</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.496</bandMin>
+                            <bandMax>0.918</bandMax>
+                        </band>            
+                       <band id="2">
+                            <bandMin>1.54</bandMin>
+                            <bandMax>1.74</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>2.06</bandMin>
+                            <bandMax>2.33</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>10.36</bandMin>
+                            <bandMax>12.46</bandMax>
+                        </band>
+                    </bandList>
+                </mode>             
+            </modeList>
+        </sensor>
+   </sensorList>
+</satellite>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="SJ-9A" cn="实践九号A星" extraInfo="">
+    <commonInfo>
+        <launch>2012-10-14</launch>
+        <retire></retire>
+        <designLife>3.0</designLife>
+        <country>中国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>645.0</orbitAltitude>
+            <orbitInclination>97.98</orbitInclination>
+            <orbitPeriod>97.5</orbitPeriod>
+            <repeatCycle>69.0</repeatCycle>
+            <lst>10:30</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <tle>
+            <id>38860</id>
+            <name>SJ-9A</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="3" sideMin="-35.0" sideMax="35.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="11">
+        <sensor name="PAN" cn="全色相机" type="0">
+            <fov>2.64</fov>
+            <swath>30.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="3" sideMin="-35.0" sideMax="35.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <modeList modeGroup="0">
+                <mode name="PAN" cn="全色">
+                    <resolution>2.5</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.45</bandMin>
+                            <bandMax>0.89</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

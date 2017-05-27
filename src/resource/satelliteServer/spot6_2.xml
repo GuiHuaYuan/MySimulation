@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="SPOT-6" cn="SPOT-6" extraInfo="">
+    <commonInfo>
+        <launch>2012-09-09</launch>
+        <retire></retire>
+        <designLife>10.0</designLife>
+        <country>法国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor>GREEN</orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>694.0</orbitAltitude>
+            <orbitInclination>98.2</orbitInclination>
+            <orbitPeriod>98.73</orbitPeriod>
+            <repeatCycle>26.0</repeatCycle>
+            <lst>10:00</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <tle>
+            <id>38755</id>
+            <name>SPOT 6</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="0">
+        <sensor name="NAOMI" cn="NAOMI" type="0">
+            <fov>4.8</fov>
+            <swath>60.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="3" sideMin="-35.0" sideMax="35.0"/>
+            <orbitAbility orbitEnable="3" orbitMin="-45.0" orbitMax="45.0"/>
+            <modeList modeGroup="0">
+                <mode name="MS" cn="MS">
+                    <resolution>6.0</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.455</bandMin>
+                            <bandMax>0.525</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.530</bandMin>
+                            <bandMax>0.590</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.625</bandMin>
+                            <bandMax>0.695</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>0.760</bandMin>
+                            <bandMax>0.890</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+                <mode name="PAN" cn="PAN">
+                    <resolution>1.5</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.455</bandMin>
+                            <bandMax>0.745</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

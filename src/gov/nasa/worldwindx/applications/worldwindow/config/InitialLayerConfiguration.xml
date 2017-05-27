@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2012 United States Government as represented by the Administrator of the
+  ~ National Aeronautics and Space Administration.
+  ~ All Rights Reserved.
+  -->
+
+<!--$Id: InitialLayerConfiguration.xml 1958 2014-04-24 19:25:37Z tgaskins $-->
+<!--This document specifies the initial layers to load into the layer manager-->
+<LayerList title="Base Layers">
+<!--    <Layer className="gov.nasa.worldwind.layers.StarsLayer" title="Stars" actuate="onLoad">
+        <Property name="Name" value="星星"/>
+    </Layer>-->
+    
+    <Layer className="gov.nasa.worldwind.layers.Earth.BMNGOneImage">
+        <Property name="Name" value="世界底图"/>
+    </Layer>
+
+   <Layer href="gov/nasa/worldwindx/applications/worldwindow/config/Earth/WorldBMNGLayer.xml" actuate="onLoad">
+        <Property name="Name" value="世界影像[500m]"/>
+    </Layer>
+     <Layer href="gov/nasa/worldwindx/applications/worldwindow/config/Earth/ChinaICubedLayer.xml" actuate="onLoad">
+        <Property name="Name" value="中国影像[60m]"/>
+        <Property name="MaxActiveAltitude" value="2.5e7" />
+    </Layer>
+
+    <Layer href="gov/nasa/worldwindx/applications/worldwindow/config/Earth/ChinaXianLayer.xml" actuate="onRequest">
+        <Property name="Name" value="中国县界"/>
+        <Property name="MaxActiveAltitude" value="500e3" />
+    </Layer>
+    <Layer href="gov/nasa/worldwindx/applications/worldwindow/config/Earth/ChinaShiLayer.xml" actuate="onRequest">
+        <Property name="Name" value="中国市界"/>
+        <Property name="MaxActiveAltitude" value="2000e3" />
+    </Layer>
+    <Layer href="gov/nasa/worldwindx/applications/worldwindow/config/Earth/ChinaShengLayer.xml" actuate="onRequest">
+        <Property name="Name" value="中国省界"/>
+    </Layer>
+    
+    <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer" title="Sky" actuate="onLoad">
+        <Property name="Name" value="大气层"/>
+    </Layer>
+</LayerList>

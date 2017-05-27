@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="HJ-1B" cn="环境一号B卫星" extraInfo="">
+    <commonInfo>
+        <launch>2008-9-6</launch>
+        <retire></retire>
+        <designLife>5.0</designLife>
+        <country>中国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>649.0</orbitAltitude>
+            <orbitInclination>97.9</orbitInclination>
+            <orbitPeriod>97.6</orbitPeriod>
+            <repeatCycle>31.0</repeatCycle>
+            <lst>10:30</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <osculatingElement>
+			  	<orbitParameter>
+			    	<epochTime>0.0</epochTime>
+						<orbitNum>0.0</orbitNum>
+			    	<semiMajorAxis>0.0</semiMajorAxis>
+						<eccentricity>0.0</eccentricity>
+						<inclination>0.0</inclination>
+						<raan>0.0</raan>
+						<argumentPerigee>0.0</argumentPerigee>
+						<meanAnomaly>0.0</meanAnomaly>
+					</orbitParameter>
+					<dynamicParameter>
+			    	<maximumDegree>0.0</maximumDegree>
+						<maximumOrder>0.0</maximumOrder>
+            <mass>0.0</mass>
+						<areaDrag>0.0</areaDrag>
+						<cd>0.0</cd>
+						<f10_7>0.0</f10_7>
+						<f10_7m>0.0</f10_7m>
+						<kp>0.0</kp>
+            <areaSrp>0.0</areaSrp>
+						<cr>0.0</cr>
+					</dynamicParameter>
+				</osculatingElement>
+        <tle>
+            <id>33321</id>
+            <name>HUANJING 1B (HJ-1B)</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="11">
+        <sensor name="CCD" cn="CCD相机" type="0">
+            <fov>56.0</fov>
+            <swath>700.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">
+                <mode name="MS" cn="多光谱">
+                    <resolution>30.0</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.43</bandMin>
+                            <bandMax>0.52</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.52</bandMin>
+                            <bandMax>0.6</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.63</bandMin>
+                            <bandMax>0.69</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>0.76</bandMin>
+                            <bandMax>0.9</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+        <sensor name="IR" cn="红外多光谱相机" type="0">
+            <fov>57.0</fov>
+            <swath>720.0</swath>
+            <scanColor>ORANGE</scanColor>
+            <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">
+                <mode name="NIR" cn="近红外">
+                    <resolution>150.0</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.75</bandMin>
+                            <bandMax>1.1</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>1.55</bandMin>
+                            <bandMax>1.75</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>3.5</bandMin>
+                            <bandMax>3.9</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+                <mode name="TIR" cn="热红外">
+                    <resolution>300.0</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>10.5</bandMin>
+                            <bandMax>12.5</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

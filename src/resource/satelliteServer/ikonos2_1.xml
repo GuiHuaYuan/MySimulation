@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="IKONOS-2" cn="IKONOS-2" extraInfo="">
+    <commonInfo>
+        <launch>1999-9-24</launch>
+        <retire></retire>
+        <designLife></designLife>
+        <country>美国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor>GREEN</orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>680.0</orbitAltitude>
+            <orbitInclination>98.2</orbitInclination>
+            <orbitPeriod>98.4</orbitPeriod>
+            <repeatCycle></repeatCycle>
+            <lst>10:30</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <tle>
+            <id>25919</id>
+            <name>IKONOS 2</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="0">
+        <sensor name="TDI CCD" cn="TDI CCD" type="0">
+            <fov>0.931</fov>
+            <swath>11</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="3" sideMin="-26.0" sideMax="26.0"/>
+            <orbitAbility orbitEnable="3" orbitMin="-26.0" orbitMax="26.0"/>
+            <modeList modeGroup="0">
+                <mode name="MS" cn="MS">
+                    <resolution>4</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.45</bandMin>
+                            <bandMax>0.52</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.52</bandMin>
+                            <bandMax>0.60</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.63</bandMin>
+                            <bandMax>0.69</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>0.76</bandMin>
+                            <bandMax>0.90</bandMax>
+                        </band>                        
+                    </bandList>
+                </mode>
+                <mode name="PAN" cn="PAN">
+                    <resolution>1</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.45</bandMin>
+                            <bandMax>0.90</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

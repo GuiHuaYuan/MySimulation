@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="GF-1" cn="高分一号卫星" extraInfo="">
+    <commonInfo>
+        <launch></launch>
+        <retire></retire>
+        <designLife></designLife>
+        <country>中国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>645.0</orbitAltitude>
+            <orbitInclination>98.0506</orbitInclination>
+            <orbitPeriod></orbitPeriod>
+            <repeatCycle></repeatCycle>
+            <lst>10:30</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <tle>
+            <id>39150</id>
+            <name>GAOFEN 1</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="11"><!--  sensorGroup-->
+        <sensor name="CCD 2" cn="全色/多光谱相机" type="0">
+            <fov>6.4</fov>
+            <swath>60.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="3" sideMin="-35.0" sideMax="35.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <modeList modeGroup="0">
+                <mode name="PAN" cn="全色"><!--  PAN-->
+                    <resolution>2</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.45</bandMin>
+                            <bandMax>0.90</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+                <mode name="MS" cn="多光谱">
+                    <resolution>8</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.45</bandMin>
+                            <bandMax>0.52</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.52</bandMin>
+                            <bandMax>0.59</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.63</bandMin>
+                            <bandMax>0.69</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>0.77</bandMin>
+                            <bandMax>0.89</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

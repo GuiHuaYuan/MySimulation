@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="DEIMOS-2" cn="DEIMOS-2" extraInfo="">
+    <commonInfo>
+        <launch>2014-6-19</launch>
+        <retire></retire>
+        <designLife>5.0</designLife>
+        <country>西班牙</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>694.0</orbitAltitude>
+            <orbitInclination>98.2</orbitInclination>
+            <orbitPeriod>98.73</orbitPeriod>
+            <repeatCycle>26.0</repeatCycle>
+            <lst>10:00</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <osculatingElement>
+			  	<orbitParameter>
+			    	<epochTime>0.0</epochTime>
+						<orbitNum>0.0</orbitNum>
+			    	<semiMajorAxis>0.0</semiMajorAxis>
+						<eccentricity>0.0</eccentricity>
+						<inclination>0.0</inclination>
+						<raan>0.0</raan>
+						<argumentPerigee>0.0</argumentPerigee>
+						<meanAnomaly>0.0</meanAnomaly>
+					</orbitParameter>
+					<dynamicParameter>
+			    	<maximumDegree>0.0</maximumDegree>
+						<maximumOrder>0.0</maximumOrder>
+            <mass>0.0</mass>
+						<areaDrag>0.0</areaDrag>
+						<cd>0.0</cd>
+						<f10_7>0.0</f10_7>
+						<f10_7m>0.0</f10_7m>
+						<kp>0.0</kp>
+            <areaSrp>0.0</areaSrp>
+						<cr>0.0</cr>
+					</dynamicParameter>
+				</osculatingElement>
+        <tle>
+            <id>40013</id>
+            <name>DEIMOS-2</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="1">
+        <sensor name="CCD" cn="CCD" type="0">
+            <fov>1.1</fov>
+            <swath>12.0</swath>
+            <scanColor>GREEN</scanColor>
+            <sideAbility sideEnable="3" sideMin="-45.0" sideMax="45.0"/>
+            <orbitAbility orbitEnable="3" orbitMin="-45.0" orbitMax="45.0"/>
+            <imagingAbility>
+            	<value>160000</value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">
+                <mode name="PAN" cn="PAN">
+                    <resolution>0.75</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.47</bandMin>
+                            <bandMax>0.84</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+                <mode name="MS" cn="MS">
+                    <resolution>3.0</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.43</bandMin>
+                            <bandMax>0.55</bandMax>
+                        </band>
+                        <band id="2">
+                            <bandMin>0.49</bandMin>
+                            <bandMax>0.61</bandMax>
+                        </band>
+                        <band id="3">
+                            <bandMin>0.6</bandMin>
+                            <bandMax>0.72</bandMax>
+                        </band>
+                        <band id="4">
+                            <bandMin>0.77</bandMin>
+                            <bandMax>0.91</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

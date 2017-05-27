@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="YG-22" cn="遥感二十二号卫星" extraInfo="">
+    <commonInfo>
+        <launch>2014-10-20</launch>
+        <retire></retire>
+        <designLife></designLife>
+        <country>中国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>0.0</orbitAltitude>
+            <orbitInclination>0.0</orbitInclination>
+            <orbitPeriod></orbitPeriod>
+            <repeatCycle>0</repeatCycle>
+            <lst></lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <osculatingElement>
+			  	<orbitParameter>
+			    	<epochTime>0.0</epochTime>
+						<orbitNum>0.0</orbitNum>
+			    	<semiMajorAxis>0.0</semiMajorAxis>
+						<eccentricity>0.0</eccentricity>
+						<inclination>0.0</inclination>
+						<raan>0.0</raan>
+						<argumentPerigee>0.0</argumentPerigee>
+						<meanAnomaly>0.0</meanAnomaly>
+					</orbitParameter>
+					<dynamicParameter>
+			    	<maximumDegree>0.0</maximumDegree>
+						<maximumOrder>0.0</maximumOrder>
+            <mass>0.0</mass>
+						<areaDrag>0.0</areaDrag>
+						<cd>0.0</cd>
+						<f10_7>0.0</f10_7>
+						<f10_7m>0.0</f10_7m>
+						<kp>0.0</kp>
+            <areaSrp>0.0</areaSrp>
+						<cr>0.0</cr>
+					</dynamicParameter>
+				</osculatingElement>
+        <tle>
+            <id>40275</id>
+            <name></name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="1">
+        <sensor name="CCD" cn="CCD" type="0">
+            <fov>13.8</fov>
+            <swath>300</swath>
+            <scanColor>ORANGE</scanColor>
+            <sideAbility sideEnable="3" sideMin="-7.5" sideMax="7.5"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <imagingAbility>
+            	<value></value>
+            	<unit>1</unit>
+            </imagingAbility>
+            <modeList modeGroup="0">
+                <mode name="PAN" cn="全色">
+                    <resolution>5</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0</bandMin>
+                            <bandMax>0</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>

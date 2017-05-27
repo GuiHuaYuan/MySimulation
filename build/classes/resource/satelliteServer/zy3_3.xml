@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<satellite name="ZY-03" cn="资源三号卫星" extraInfo="">
+    <commonInfo>
+        <launch>2012-1-9</launch>
+        <retire></retire>
+        <designLife>4.0</designLife>
+        <country>中国</country>
+    </commonInfo>
+    <controlInfo>
+        <orbitColor></orbitColor>
+        <satModel></satModel>
+    </controlInfo>
+    <orbit>
+        <orbitInfo>
+            <orbitType>0</orbitType>
+            <orbitAltitude>506.0</orbitAltitude>
+            <orbitInclination>97.5</orbitInclination>
+            <orbitPeriod>94.65</orbitPeriod>
+            <repeatCycle>59.0</repeatCycle>
+            <lst>10:30</lst>
+        </orbitInfo>
+        <orbitElement>
+            <epoch>0</epoch>
+            <orbitA>0.0</orbitA>
+            <orbitE>0.0</orbitE>
+            <orbitI>0.0</orbitI>
+            <orbitQ>0.0</orbitQ>
+            <orbitW>0.0</orbitW>
+            <orbitF>0.0</orbitF>
+        </orbitElement>
+        <tle>
+            <id>38046</id>
+            <name>ZIYUAN 3 (ZY 3)</name>
+            <line1>0</line1>
+            <line2>0</line2>
+        </tle>
+    </orbit>
+    <sideAbility sideEnable="3" sideMin="-32.0" sideMax="32.0"/>
+    <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+    <sensorList sensorGroup="1111">
+        <sensor name="TDI CCD 1" cn="正视全色相机" type="0">
+            <fov>5.8</fov>
+            <swath>51.0</swath>
+            <scanColor>WHITE</scanColor>
+            <sideAbility sideEnable="3" sideMin="-32.0" sideMax="32.0"/>
+            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
+            <modeList modeGroup="0">
+                <mode name="PAN" cn="全色">
+                    <resolution>2.1</resolution>
+                    <bandList>
+                        <band id="1">
+                            <bandMin>0.5</bandMin>
+                            <bandMax>0.8</bandMax>
+                        </band>
+                    </bandList>
+                </mode>
+            </modeList>
+        </sensor>
+    </sensorList>
+</satellite>
