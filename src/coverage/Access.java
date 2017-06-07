@@ -85,9 +85,12 @@ public class Access {
         maxGridPerDay /= 25;//面积转点数。每个点数代表25平方公里
 
         //存储用户输入的起止时间
-        Time taskStartTime = new Time(ai.startTime);
+        Time taskStartTime = new Time(ai.startTime);//任务开始时间
         Time taskEndTime = new Time(ai.endTime);
         taskEndTime.add(Calendar.DAY_OF_MONTH, 1);//客户端传入的结束时间是当天的0：00，但实际调度的结束时间是次日的0：00
+        
+        Time taskTerminalTime=taskStartTime.clone();//任务终止时间（即评估的最长任务时间），为任务开始时间增加1年
+        taskTerminalTime.add(Calendar.YEAR, 1);
 
         OneDayCoverage odc = new OneDayCoverage();//卫星覆盖次数计算工具类
         CloudDataBase cloudDataBase = new CloudDataBase();//读取云量数据库工具类
@@ -107,6 +110,7 @@ public class Access {
         
         String path;
         int totalNode = 0;
+        
         totalNode = Geometry2Grid(ai, odc);//对输入的Geometry进行采样，返回地面任务区域的总点数
         ao.totalGrid = totalNode;
         System.out.println("采样结束");
@@ -134,10 +138,7 @@ public class Access {
 
         //////////////////////////
         
-//        int totalNode = 0;
-//        path = "grid\\" + "cg" + ".txt";
-//        path = "grid\\" + "China_NF" + ".txt";
-//
+//        path = "grid\\cg.txt";
 //        try {
 //            DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
 //            for (int i = 0; i < 800; i++) {
@@ -158,7 +159,6 @@ public class Access {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
-//
 //        ao.totalGrid= totalNode;
         
         /////////////////////////////
@@ -166,8 +166,11 @@ public class Access {
 
 //        taskFinalTime.add(Calendar.DAY_OF_MONTH, 180);
 //        Time[] timeNodeArray = this.getTimeNode(ai.startTime, ai.endTime, taskFinalTime.toBJTime());
-        Time[] timeNodeArray = this.getTimeNode(taskStartTime, taskEndTime);
+        Time[] timeNodeArray = this.getTimeNode(taskStartTime, taskEndTime, taskTerminalTime);
         ao.timeNodeArray = new String[timeNodeArray.length];//时间节点
+        for (int i = 0; i < timeNodeArray.length; i++) {
+            ao.timeNodeArray[i] = timeNodeArray[i].toBJTime();
+        }
         ao.progressArray = new float[timeNodeArray.length];//拍摄进度
         ao.coverageTimesArray = new int[timeNodeArray.length][];//覆盖次数
         ao.cloudArray = new int[timeNodeArray.length][];//云量情况
@@ -179,7 +182,7 @@ public class Access {
         for (timeNodeIndex = 0; timeNodeIndex < timeNodeArray.length - 1; timeNodeIndex++) {
             
             Time xunStartTime = timeNodeArray[timeNodeIndex].clone();//当前旬的开始时间
-            ao.timeNodeArray[timeNodeIndex] = xunStartTime.toBJTime();
+            //ao.timeNodeArray[timeNodeIndex] = xunStartTime.toBJTime();
             ao.coverageTimesArray[timeNodeIndex] = new int[20];
             ao.cloudArray[timeNodeIndex] = new int[20];
             int[] ms = xunStartTime.getMonthXun();
@@ -228,7 +231,7 @@ public class Access {
             cloudDataBase.UpdateCloudGrid(ms[0], ms[1]);//更新云量情况
             for (int i = 0; i < 800; i++) {
                 for (int j = 0; j < 1400; j++) {
-                    if (odc.chinaGrid[i][j] != -10) {//首先判断是否位于地面任务区域内部
+                    if (odc.chinaGrid[i][j]> -9) {//首先判断是否位于地面任务区域内部
                         float coverageTimes = odc.chinaGrid[i][j];//点[i][j]的当前旬实际覆盖次数
                         coverageTimes = coverageTimes >= 19 ? 19 : coverageTimes;//超过19次，则忽略
 
@@ -238,9 +241,7 @@ public class Access {
                         int cloudIndex = (int) (cloudDataBase.CloudGrid[i][j] * 100);//计算该点云量的百分数
                         cloudIndex = cloudIndex > 99 ? 99 : cloudIndex;//等于100时，按照99算
                         ao.cloudArray[timeNodeIndex][cloudIndex / 5]++;//云量情况计入AccessOutput中
-
                         effectiveTimesGrid[i][j] += (float) xunTimes / cloud2times[cloudIndex];//计算有效覆盖次数=实际覆盖次数 * (1/该点的云量情况对应的覆盖次数)
-
                         formerChinaGrid[i][j] = odc.chinaGrid[i][j];
                     }
                 }
@@ -281,6 +282,7 @@ public class Access {
                         }
                     }
                 }
+                ao.endTimeNode = timeNodeIndex + 1;
                 Point2Xian p2x = new Point2Xian();
                 for (int i = 0; i < 800; i++) {
                     for (int j = 0; j < 1400; j++) {
@@ -292,16 +294,14 @@ public class Access {
                     }
                 }
                 ao.regionCoverageInfoArray = p2x.GetRegionCoverageResult();
-                break;
+//                break;
             }
+            
+
         }
-        ao.timeNodeArray[timeNodeIndex + 1] = timeNodeArray[timeNodeIndex + 1].toBJTime();//将最后一个时间节点加入AccessOutput中
         ao.isSuccess = true;
 //        System.out.println("计算结束");
 
-//        System.out.printf("%.2f",(float)(ao.difficultyDegree[0]+ao.difficultyDegree[1])/totalNode);
-//        System.out.printf("%.3f", (ao.difficultyDegree[0] + ao.difficultyDegree[1]) * 25.0f / 10000);
-//        System.out.println("");
         
         
 //        stat(odc.chinaGrid);
@@ -323,11 +323,35 @@ public class Access {
 //        getResult(odc, cloudDataBase, MonthXunStart[0], MonthXunStart[1], MonthXunEnd[0], MonthXunEnd[1], totalNode);
 //        return odc.chinaGrid;
         
-        
-        
-        
         return effectiveTimesGrid;
     }
+    
+    
+    
+    
+    /*
+    
+    
+                
+    
+    
+    
+    
+    
+    
+    
+    
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     //本函数用于计算用户设置时间段之间的所有时间节点，每隔1旬获取一个时间节点，用于计算该旬的任务情况

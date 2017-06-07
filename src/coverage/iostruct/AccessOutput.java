@@ -17,6 +17,7 @@ public class AccessOutput {
     public boolean isSuccess;
     public int totalGrid;
     public String[] timeNodeArray;
+    public int endTimeNode;             //表示第几个节点是结束时间节点
     public float[] progressArray;       //progressArray与timeNodeArray一一对应，progressArray[i]表示timeNodeArray[i]这一个时间节点所在的旬结束时，达到的覆盖进度，取值范围为:0.00~1.00
     public int[][] coverageTimesArray;  //progressArray与coverageTimesArray一一对应，progressArray[i]表示timeNodeArray[i]这一个时间节点所在的旬结束时，区域的覆盖情况
                                         //第一维的长度等于timeNodeArray的长度，第二维的长度为20，第二维的每一个元素代表覆盖次数。

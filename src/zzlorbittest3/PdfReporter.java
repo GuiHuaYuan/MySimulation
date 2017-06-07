@@ -55,13 +55,16 @@ public class PdfReporter {
             doc.open();
             Image img; 
             String str1,str2;
+            Time t;
             addTitle(doc,"评估报告");   
             
             /////////////////////////            第1部分             ///////////////////////// 
             addSubTitle(doc, "一、输入信息概况");
             str1 = "所选卫星:";
-            for (SatelliteInput sli : ai.satelliteInput) {
-                str1 += sli.satName + " ";
+            if (ai.satelliteInput != null) {
+                for (SatelliteInput sli : ai.satelliteInput) {
+                    str1 += sli.satName + " ";
+                }
             }
             addContent(doc, str1);
 
@@ -72,13 +75,18 @@ public class PdfReporter {
             addContent(doc, "任务开始时间:" + str1 + "  任务结束时间:" + str2);
 
 
-            /////////////////////////            第2部分             ///////////////////////// 
+            /////////////////////////            获取进度小于100%的时间节点列表             ///////////////////////// 
+            
             
             int len = ao.timeNodeArray.length;
-//            len=4;
-//            ao.progressArray[0]=0.6f;
-//            ao.progressArray[1]=0.3f;
-//            ao.progressArray[2]=0.9f;
+            for (int i = 0; i < ao.timeNodeArray.length; i++) {
+                if (ao.progressArray[i] >= 0.99f) {
+                    len = i > ao.endTimeNode ? i : ao.endTimeNode;
+                    len += 1;
+                    break;
+                }
+            }
+
 
             PdfPic pdfpic = new PdfPic();
 
@@ -90,7 +98,7 @@ public class PdfReporter {
             //如果时间节点的个数过长，则以月为x坐标的时间间隔 否则，以旬为时间间隔
             if (len >= 10) {
                 for (int i = 0; i < len; i++) {
-                    Time t = new Time(ao.timeNodeArray[i]);
+                    t = new Time(ao.timeNodeArray[i]);
                     pdfpic.xArray[i] = (t.getGregorianCalendar().getTime().getTime() - t0.getGregorianCalendar().getTime().getTime()) / 1000.0f / 3600;
                     if (t.getBJ(Calendar.DAY_OF_MONTH) == 1) {
                         pdfpic.xCoorStrArray[i] = Integer.toString(t.getBJ(Calendar.MONTH) + 1) + "月";
@@ -100,7 +108,9 @@ public class PdfReporter {
                 }
             } else {
                 for (int i = 0; i < len; i++) {
-                    Time t = new Time(ao.timeNodeArray[i]);
+                    t = new Time(ao.timeNodeArray[i]);
+//                    System.out.println(t.toBJTime());
+//                    System.out.println(t.getBJ(Calendar.DAY_OF_MONTH));
                     pdfpic.xArray[i] = (t.getGregorianCalendar().getTime().getTime() - t0.getGregorianCalendar().getTime().getTime()) / 1000.0f / 3600;
                     if (t.getBJ(Calendar.DAY_OF_MONTH) == 1) {
                         pdfpic.xCoorStrArray[i] = Integer.toString(t.getBJ(Calendar.MONTH) + 1) + "月上旬";
@@ -117,6 +127,7 @@ public class PdfReporter {
   
             addSubTitle(doc,"二、拍摄时间周期内地面任务区域的预测云量（按旬）");
 
+            /////////////////////////            第2部分 云量      ///////////////////////// 
             pdfpic.yArray = new float[len];
             for (int i = 0; i < len - 1; i++) {
                 for (int j = 0; j < 20; j++) {
@@ -124,24 +135,51 @@ public class PdfReporter {
                 }
                 pdfpic.yArray[i] /= ao.totalGrid;
             }
-            img = pdfpic.getImage(PdfPic.PDFImageType.CLOUD);
+            pdfpic.yArray[len - 1] = pdfpic.yArray[len - 2];
+            pdfpic.endTimeNode = -1;
+            img = pdfpic.getImage();
             img.setAlignment(Element.ALIGN_CENTER);
             doc.add(img);
 
-            /////////////////////////            第3部分             ///////////////////////// 
+            /////////////////////////            第3部分  覆盖进度           ///////////////////////// 
 
             addSubTitle(doc,"三、地面任务区域拍摄进度分析");
             
             pdfpic.yArray = ao.progressArray;   
+            pdfpic.yArray=new float[len];
+            pdfpic.yArray[0]=0;
+            pdfpic.endTimeNode = ao.endTimeNode;
+            for (int i = 1; i < len; i++) {
+                pdfpic.yArray[i] = ao.progressArray[i - 1];
+            }
 
-            img = pdfpic.getImage(PdfPic.PDFImageType.PROGRESS);
+            img = pdfpic.getImage();
             img.setAlignment(Element.ALIGN_CENTER);
             doc.add(img);
 
-            str1 = String.format("%.1f", 100 * ao.progressArray[len - 2]);
-            Time t = new Time(ao.timeNodeArray[len - 1]);
-            str2 = String.format("%d年%d月%d日", t.getBJ(Calendar.YEAR), 1+t.getBJ(Calendar.MONTH), t.getBJ(Calendar.DAY_OF_MONTH));
-            addContent(doc, "地面任务区域预期覆盖情况：" + str1 + "%,完全覆盖预期需要至:" + str2);
+            //判断1年的时间是否完成了完全覆盖,ao.progressArray[ao.progressArray.length - 1]的值是0
+            if (ao.progressArray[ao.progressArray.length - 2] >= 0.99f) {
+                //完成了完全覆盖，输出刚达到完全覆盖需要的时间
+
+                int completeNodeIndex = ao.progressArray.length - 2;
+                for (int i = 0; i < ao.timeNodeArray.length - 1; i++) {
+                    if (ao.progressArray[i] >= 0.99f) {
+                        completeNodeIndex = i;
+                        break;
+                    }
+                }
+                str1 = String.format("%.1f", 100 * ao.progressArray[ao.endTimeNode]);
+                t = new Time(ao.timeNodeArray[completeNodeIndex + 1]);
+                str2 = String.format("%d年%d月%d日", t.getBJ(Calendar.YEAR), 1 + t.getBJ(Calendar.MONTH), t.getBJ(Calendar.DAY_OF_MONTH));
+                addContent(doc, "地面任务区域预期覆盖情况：" + str1 + "%,完全覆盖预期需要至:" + str2);
+
+            } else {
+                //未完成完全覆盖，输出1年后的覆盖率
+                str1 = String.format("%.1f", 100 * ao.progressArray[ao.endTimeNode-1]);
+                t = new Time(ao.timeNodeArray[len - 1]);
+                str2 = String.format("%.1f%%", 100.0f * ao.progressArray[ao.progressArray.length - 2]);
+                addContent(doc, "地面任务区域预期覆盖情况：" + str1 + "%,一年后预期覆盖率:" + str2);
+            }
 
             /////////////////////////            第5部分             ///////////////////////// 
             addSubTitle(doc, "四、潜在薄弱区");
@@ -155,6 +193,8 @@ public class PdfReporter {
             str1 = "图中蓝色部分的区域是易于获取的区域，黄色部分的区域是较易获取的区域，橙色部分的区域是较难获取的区域，红色部分的区域是难于获取的区域，";
             addContent(doc, str1);
 
+//            doc.close();
+//            int e=1/0;
             /////////////////////////            第6部分             ///////////////////////// 
 
             PdfPTable table;
@@ -205,7 +245,9 @@ public class PdfReporter {
                 cell.setHorizontalAlignment(1);
                 table.addCell(cell);
 
-                str1 = String.format("%.1f%%", 100.0f * ao.regionCoverageInfoArray[i].coverageTimes / ao.regionCoverageInfoArray[i].groundTaskRegionTotalPoint);
+                float rate=100.0f * ao.regionCoverageInfoArray[i].coverageTimes / ao.regionCoverageInfoArray[i].groundTaskRegionTotalPoint;
+                rate=rate<=100?rate:100;
+                str1 = String.format("%.1f%%", rate);
                 para = new Paragraph(str1, tableFont);
                 para.setAlignment(Element.ALIGN_CENTER);
                 cell = new PdfPCell(para);
@@ -217,7 +259,7 @@ public class PdfReporter {
             /////////////////////////            第7部分             ///////////////////////// 
             addSubTitle(doc, "六、总结");
             String summaryString;
-            str1 = String.format("%.1f", 100 * ao.progressArray[len - 2]);
+            str1 = String.format("%.1f%%", 100 * ao.progressArray[ao.endTimeNode-1]);
             t = new Time(ao.timeNodeArray[len - 1]);
             str2 = String.format("%d年%d月%d日", t.getBJ(Calendar.YEAR), 1 + t.getBJ(Calendar.MONTH), t.getBJ(Calendar.DAY_OF_MONTH));
             summaryString = "    地面任务区域在拍摄时间周期内，数据获取难以程度总体为" + (100.0f * ao.difficultyDegree[0] / ao.totalGrid + 100.0f * ao.difficultyDegree[1] / ao.totalGrid >= 50f ? "易于获取" : "难于获取");
@@ -229,9 +271,7 @@ public class PdfReporter {
             summaryString = String.format("    其中较难获取的区域占: %.1f%%,难于获取的区域占：%.1f%%", 100.0f * ao.difficultyDegree[2] / ao.totalGrid, 100.0f * ao.difficultyDegree[3] / ao.totalGrid);
             addContent(doc, summaryString);
 
-//            summaryString = "二、对地面任务区域可完成2次全覆盖。";
-//            addContent(doc, summaryString);
-            
+
             
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
             /////////////////////////////////         添加附表 1           ////////////////////////////////////////////
@@ -398,12 +438,16 @@ public class PdfReporter {
 
 }
 
+//本类用于完成绘图折线图功能，传入折线的各个点的横纵坐标，以及各个点横坐标对应的文字 
+
 class PdfPic {
     
+    public float[] xArray;//折线图各个点的横坐标
+    public String[] xCoorStrArray;//折线图各个点横坐标对应的x轴文字
+    public float[] yArray;//折线图各个点的纵坐标
     
-    public String[] xCoorStrArray;
-    public float[] yArray;
-    public float[] xArray;
+    public int endTimeNode;//表示第几个节点是结束时间节点,-1表示不绘制结束时间标记
+    
 
 
     private BufferedImage bimg;
@@ -419,20 +463,20 @@ class PdfPic {
 
     }
 
-    public enum PDFImageType {
-        PROGRESS, CLOUD
-    }
+//    public enum PDFImageType {
+//        PROGRESS, CLOUD
+//    }
 
-    public Image getImage(PDFImageType type) {
+    public Image getImage() {
 
         bimg = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         g2d = (java.awt.Graphics2D) bimg.getGraphics();
         drawBackgroundImage();
-        if (PDFImageType.PROGRESS.equals(type)) {
-            drawProgressData();
-        } else {
-            drawCloudData();
-        }
+//        if (PDFImageType.PROGRESS.equals(type)) {
+            drawData();
+//        } else {
+//            drawCloudData();
+//        }
         drawXCoor();
         Image img = null;
         try {
@@ -443,38 +487,7 @@ class PdfPic {
         return img;
     }
 
-    private void drawProgressData() {
-        int len = xArray.length;
-        float[] xf = new float[len];
-        for (int i = 0; i < len; i++) {
-            xf[i] = xArray[i] - xArray[0];
-        }
-
-        float gap = 90.0f / xf[len - 1];
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(1.0f));
-
-        Point cpt1, cpt2;
-        Point pt1 = new Point(0, 0);
-        Point pt2 = new Point(0, 0);
-        for (int i = 1; i < len; i++) {
-            pt1.x = 5 + (int) (xf[i - 1] * gap);
-            if (i - 2 >= 0) {
-                pt1.y = (int) (100 * yArray[i - 2]);
-            } else {
-                pt1.y = 0;
-            }
-            pt1.y = pt1.y > 100 ? 100 : pt1.y;
-            cpt1 = convertPoint(pt1);
-            pt2.x = 5 + (int) (xf[i - 0] * gap);
-            pt2.y = (int) (100 * yArray[i - 1]);
-            pt2.y = pt2.y > 100 ? 100 : pt2.y;
-            cpt2 = convertPoint(pt2);
-            g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
-        }
-    }
-
-    private void drawCloudData() {
+    private void drawData() {
         int len = xArray.length;
         float[] xf = new float[len];
         for (int i = 0; i < len; i++) {
@@ -489,19 +502,81 @@ class PdfPic {
         Point pt1 = new Point(0, 0);
         Point pt2 = new Point(0, 0);
         for (int i = 0; i < len - 1; i++) {
+            //画折线
             pt1.x = 5 + (int) (xf[i] * gap);
             pt1.y = (int) (100 * yArray[i]);
             pt1.y = pt1.y > 100 ? 100 : pt1.y;
             cpt1 = convertPoint(pt1);
+            
             pt2.x = 5 + (int) (xf[i + 1] * gap);
-            if (i != len - 2) {
-                pt2.y = (int) (100 * yArray[i + 1]);
-                pt2.y = pt2.y > 100 ? 100 : pt2.y;
-            }
+            pt2.y = (int) (100 * yArray[i + 1]);
+            pt2.y = pt2.y > 100 ? 100 : pt2.y;
             cpt2 = convertPoint(pt2);
             g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
+            g2d.drawRect(cpt1.x, cpt1.y,1,1);
+
+            //画短竖线
+            pt1.y = 0;
+            cpt1 = convertPoint(pt1);
+            pt1.y = xCoorStrArray[i] == null ? 2: 5;
+            cpt2 = convertPoint(pt1);
+            g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
+        }
+        //画最后一个时间节点的短竖线
+        pt1.x = 5 + (int) (xf[len-1] * gap);
+        pt1.y = 0;
+        cpt1 = convertPoint(pt1);
+        pt1.y = xCoorStrArray[len - 1] == null ? 2 : 5;
+        cpt2 = convertPoint(pt1);
+        g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
+        
+        //标记截止时间
+        if (endTimeNode >= 0) {
+            g2d.setColor(Color.RED);
+            pt1.x = 5 + (int) (xf[endTimeNode] * gap);
+            pt1.y = 0;
+            cpt1 = convertPoint(pt1);
+            pt2.x = 5 + (int) (xf[endTimeNode] * gap);
+            pt2.y = (int) (100 * yArray[endTimeNode]);
+            cpt2 = convertPoint(pt2);
+            g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
+
+            pt1.x = 0;
+            pt1.y = (int) (100 * yArray[endTimeNode]);
+            cpt1 = convertPoint(pt1);
+            g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
+            g2d.setColor(Color.BLACK);
         }
     }
+
+//    private void drawCloudData() {
+//        int len = xArray.length;
+//        float[] xf = new float[len];
+//        for (int i = 0; i < len; i++) {
+//            xf[i] = xArray[i] - xArray[0];
+//        }
+//
+//        float gap = 90.0f / xf[len - 1];
+//        g2d.setColor(Color.BLACK);
+//        g2d.setStroke(new BasicStroke(1.0f));
+//
+//        Point cpt1, cpt2;
+//        Point pt1 = new Point(0, 0);
+//        Point pt2 = new Point(0, 0);
+//        for (int i = 0; i < len - 1; i++) {
+//            pt1.x = 5 + (int) (xf[i] * gap);
+//            pt1.y = (int) (100 * yArray[i]);
+//            pt1.y = pt1.y > 100 ? 100 : pt1.y;
+//            cpt1 = convertPoint(pt1);
+//            pt2.x = 5 + (int) (xf[i + 1] * gap);
+//            if (i != len - 2) {
+//                pt2.y = (int) (100 * yArray[i + 1]);
+//                pt2.y = pt2.y > 100 ? 100 : pt2.y;
+//            }
+//            cpt2 = convertPoint(pt2);
+//            g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
+//        }
+//    }
 
     private void drawXCoor() {
         int len = xArray.length;
@@ -517,8 +592,8 @@ class PdfPic {
 
         Point cpt1;
         Point pt1 = new Point(0, 0);
-        for (int i = 0; i < len ; i++) {
-            pt1.x = 5 + (int) (xf[i] * gap);
+        for (int i = 0; i < len-1 ; i++) {//最后一个时间节点不显示名称
+            pt1.x = 5 + (int) (xf[i] * gap)+1;
             pt1.y = -10;
             cpt1 = convertPoint(pt1);
             if (this.xCoorStrArray[i] != null) {
@@ -546,11 +621,16 @@ class PdfPic {
         g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
 
         //绘制0%-100%
+        g2d.setStroke(new BasicStroke(1.0f));
         g2d.setFont(new java.awt.Font("Times New Roman", java.awt.Font.PLAIN, 10));
         for (int i = 0; i <= 100; i += 10) {
             pt1 = new Point(0, i);
             cpt1 = convertPoint(pt1);
             g2d.drawString(i + "%", 5, 4 + cpt1.y);
+            
+            pt2 = new Point(1, i);
+            cpt2 = convertPoint(pt2);
+            g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
         }
 
         return bimg;

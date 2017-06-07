@@ -59,6 +59,8 @@
             <line2>0</line2>
         </tle>
     </orbit>
+	<energy></energy>
+    <capacity></capacity>
     <sideAbility sideEnable="0" sideMin="0.0" sideMax="0.0"/>
     <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
     <sensorList sensorGroup="1">
@@ -72,6 +74,15 @@
             	<value>160000</value>
             	<unit>1</unit>
             </imagingAbility>
+			<powerOnTime></powerOnTime>
+            <powerOnEnergy></powerOnEnergy>
+            <powerOffTime></powerOffTime>
+            <powerOffEnergy></powerOffEnergy>
+            <stableTime></stableTime>
+            <maxShotTime></maxShotTime>
+            <maxSlewTime></maxSlewTime>
+            <slewSpeed></slewSpeed>
+            <slewEnergyPerDegree></slewEnergyPerDegree>
             <modeList modeGroup="0">
                 <mode name="PAN" cn="PAN">
                     <resolution>0.75</resolution>
