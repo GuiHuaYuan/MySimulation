@@ -833,6 +833,7 @@ public class SimulationDialog extends JDialog {
 
         leftAlignPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         snowConsiderCheckBox = new JCheckBox("¿¼ÂÇ»ýÑ©Çé¿ö");
+        snowConsiderCheckBox.setSelected(true);
         leftAlignPanel.add(snowConsiderCheckBox);
         modelParaBox.add(leftAlignPanel);
         modelParaBox.add(Box.createVerticalStrut(3));

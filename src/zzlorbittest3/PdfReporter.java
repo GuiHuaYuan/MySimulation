@@ -54,7 +54,7 @@ public class PdfReporter {
             PdfWriter.getInstance(doc, new FileOutputStream(path));
             doc.open();
             Image img; 
-            String str1,str2;
+            String str1,str2,SummaryString;
             Time t;
             addTitle(doc,"评估报告");   
             
@@ -168,10 +168,11 @@ public class PdfReporter {
                         break;
                     }
                 }
-                str1 = String.format("%.1f", 100 * ao.progressArray[ao.endTimeNode]);
+                str1 = String.format("%.1f", 100 * ao.progressArray[ao.endTimeNode-1]);
                 t = new Time(ao.timeNodeArray[completeNodeIndex + 1]);
                 str2 = String.format("%d年%d月%d日", t.getBJ(Calendar.YEAR), 1 + t.getBJ(Calendar.MONTH), t.getBJ(Calendar.DAY_OF_MONTH));
                 addContent(doc, "地面任务区域预期覆盖情况：" + str1 + "%,完全覆盖预期需要至:" + str2);
+                SummaryString="    预期达到的覆盖率为：" + str1 + "%  预期在" + str2 + "能够实现全覆盖";
 
             } else {
                 //未完成完全覆盖，输出1年后的覆盖率
@@ -179,6 +180,7 @@ public class PdfReporter {
                 t = new Time(ao.timeNodeArray[len - 1]);
                 str2 = String.format("%.1f%%", 100.0f * ao.progressArray[ao.progressArray.length - 2]);
                 addContent(doc, "地面任务区域预期覆盖情况：" + str1 + "%,一年后预期覆盖率:" + str2);
+                SummaryString="    预期达到的覆盖率为：" + str1 +  "%,一年后预期覆盖率:" + str2;
             }
 
             /////////////////////////            第5部分             ///////////////////////// 
@@ -264,7 +266,7 @@ public class PdfReporter {
             str2 = String.format("%d年%d月%d日", t.getBJ(Calendar.YEAR), 1 + t.getBJ(Calendar.MONTH), t.getBJ(Calendar.DAY_OF_MONTH));
             summaryString = "    地面任务区域在拍摄时间周期内，数据获取难以程度总体为" + (100.0f * ao.difficultyDegree[0] / ao.totalGrid + 100.0f * ao.difficultyDegree[1] / ao.totalGrid >= 50f ? "易于获取" : "难于获取");
             addContent(doc, summaryString);
-            summaryString = "    预期达到的覆盖率为：" + str1 + "  预期在" + str2 + "能够实现全覆盖";
+            summaryString = SummaryString;
             addContent(doc, summaryString);
             summaryString = String.format("    其中易于获取的区域占: %.1f%%,较易获取的区域占：%.1f%%", 100.0f * ao.difficultyDegree[0] / ao.totalGrid, 100.0f * ao.difficultyDegree[1] / ao.totalGrid);
             addContent(doc, summaryString);
@@ -513,7 +515,7 @@ class PdfPic {
             pt2.y = pt2.y > 100 ? 100 : pt2.y;
             cpt2 = convertPoint(pt2);
             g2d.drawLine(cpt1.x, cpt1.y, cpt2.x, cpt2.y);
-            g2d.drawRect(cpt1.x, cpt1.y,1,1);
+//            g2d.drawRect(cpt1.x, cpt1.y,1,1);
 
             //画短竖线
             pt1.y = 0;
