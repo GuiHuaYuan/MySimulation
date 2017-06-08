@@ -106,7 +106,7 @@
                     </bandList>
                 </mode>
                 <mode name="PAN" cn="PAN">
-                    <resolution>5.0</resolution>
+                    <resolution>2.5</resolution>
                     <bandList>
                         <band id="1">
                             <bandMin>0.49</bandMin>
@@ -116,49 +116,7 @@
                 </mode>
             </modeList>
         </sensor>
-        <sensor name="HRG2" cn="HRG2" type="0">
-            <fov>4.24</fov>
-            <swath>60.0</swath>
-            <scanColor>GREEN</scanColor>
-            <sideAbility sideEnable="3" sideMin="-27.0" sideMax="27.0"/>
-            <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
-            <imagingAbility>
-                <value></value>
-                <unit>1</unit>
-            </imagingAbility>
-            <modeList modeGroup="0">
-                <mode name="MS" cn="MS">
-                    <resolution>10.0</resolution>
-                    <bandList>
-                        <band id="1">
-                            <bandMin>0.5</bandMin>
-                            <bandMax>0.59</bandMax>
-                        </band>
-                        <band id="2">
-                            <bandMin>0.61</bandMin>
-                            <bandMax>0.68</bandMax>
-                        </band>
-                        <band id="3">
-                            <bandMin>0.79</bandMin>
-                            <bandMax>0.89</bandMax>
-                        </band>
-                        <band id="4">
-                            <bandMin>1.5</bandMin>
-                            <bandMax>1.75</bandMax>
-                        </band>
-                    </bandList>
-                </mode>
-                <mode name="PAN" cn="PAN">
-                    <resolution>5.0</resolution>
-                    <bandList>
-                        <band id="1">
-                            <bandMin>0.49</bandMin>
-                            <bandMax>0.69</bandMax>
-                        </band>
-                    </bandList>
-                </mode>
-            </modeList>
-        </sensor>
+
         <sensor name="HRS" cn="HRS" type="0">
             <fov>8.25</fov>
             <swath>120.0</swath>

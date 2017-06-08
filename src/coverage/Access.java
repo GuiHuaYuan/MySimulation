@@ -60,8 +60,8 @@ public class Access {
             //如果传感器的侧摆角大于30，则设定为30，防止过大的侧摆角造成扫描线超出地球的范围
             for (SensorInput ssi : sli.sensorInput) {
                 if (Math.abs(ssi.leftAngle) > 30 || Math.abs(ssi.rightAngle) > 30) {
-                    ssi.leftAngle = -30;
-                    ssi.rightAngle = 30;
+                    ssi.leftAngle = 30;
+                    ssi.rightAngle = -30;
                 }
             }
         }
