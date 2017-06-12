@@ -301,9 +301,12 @@ public class Access {
         }
         ao.isSuccess = true;
 //        System.out.println("¼ÆËã½áÊø");
+        for (int i = 0; i < ao.timeNodeArray.length; i++) {
+            String s = String.format("%s\t%.1f%%", ao.timeNodeArray[i], 100 * ao.progressArray[i]);
+            System.out.println(s);
+        }
 
-        
-        
+
 //        stat(odc.chinaGrid);
 
  
