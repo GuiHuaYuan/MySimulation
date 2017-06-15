@@ -71,7 +71,7 @@
             <sideAbility sideEnable="3" sideMin="-20.0" sideMax="20.0"/>
             <orbitAbility orbitEnable="0" orbitMin="0.0" orbitMax="0.0"/>
             <imagingAbility>
-                <value>200000</value>
+                <value>50000</value>
                 <unit>1</unit>
             </imagingAbility>
             <powerOnTime></powerOnTime>

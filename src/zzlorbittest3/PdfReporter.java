@@ -367,7 +367,7 @@ public class PdfReporter {
                 t = new Time(ao.timeNodeArray[i]);
                 int day = t.getBJ(Calendar.DAY_OF_MONTH);
                 int mon = 1 + t.getBJ((Calendar.MONTH));
-                String str = Integer.toString(mon) + "ÔÂ";
+                String str = "½ØÖ¹"+Integer.toString(mon) + "ÔÂ";
                 if (i == 0) {
                     if (day < 11) {
                         str += "ÉÏÑ®";

@@ -70,8 +70,21 @@ public class SimulationDialog extends JDialog {
         regionRenderableLayer=(RenderableLayer)wwd.getModel().getLayers().getLayerByName("地面任务区域");
         regionManager = new RegionManagerClass(regionRenderableLayer);
         satelliteManager = new SatelliteManagerClass();
-        
-        
+
+        for (SatelliteInput satelliteInput : satelliteManager.allSatelliteArray) {
+
+            for (SensorInput sensorInput : satelliteInput.sensorInput) {
+
+                for (SensorModeInput smi : sensorInput.sensorMode) {
+//                   smi.Mode
+                    String str = String.format("%s\t%s\t%f\t%f\t%s\t%f\t%f\t%f\t%f\t%f\t%s\t%f", satelliteInput.ChineseSatName,satelliteInput.id, satelliteInput.leftAngle, satelliteInput.rightAngle, sensorInput.senName, sensorInput.fov, sensorInput.swath, sensorInput.leftAngle, sensorInput.rightAngle, sensorInput.maxAreaPerDay, smi.Mode, smi.resolution);
+                    System.out.println(str);
+
+                }
+
+            }
+        }
+
         this.wwd = wwd;
         JPanel SatellitePanel = makeSatellitePanel();
         JScrollPane OutputPanel = makeOutputPanel();
