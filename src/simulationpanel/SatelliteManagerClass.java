@@ -28,11 +28,19 @@ public class SatelliteManagerClass {
         readAllSatellite();
     }
     
-    private void readAllSatellite()
-    {
-        String satFilePath = "src\\resource\\satellite";
-        String tlePath = "src\\resource\\tle.txt";
-        HashMap<String, String> id2tleMap=ProcessResource.ReadTle(tlePath);
+    private void readAllSatellite() {
+        String satFilePath, tlePath;
+
+        //判断程序是在netbeans环境下，还是在编译好的jar包中。通过判断src文件夹是否存在来判断
+        File src = new File("src");
+        if (src.exists()) {
+            satFilePath = "src\\resource\\satellite";
+            tlePath = "src\\resource\\tle.txt";
+        } else {
+            satFilePath = "resource\\satellite";
+            tlePath = "resource\\tle.txt";
+        }
+        HashMap<String, String> id2tleMap = ProcessResource.ReadTle(tlePath);
         File satFile = new File(satFilePath);
         ArrayList<SatelliteInput> allSliList = new ArrayList<SatelliteInput>();
         for (File satXml : satFile.listFiles()) {

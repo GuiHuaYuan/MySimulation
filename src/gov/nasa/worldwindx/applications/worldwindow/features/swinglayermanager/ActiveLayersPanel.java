@@ -24,6 +24,7 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -87,7 +88,20 @@ public class ActiveLayersPanel extends AbstractFeaturePanel implements ActiveLay
         attr.setBackgroundColor(new Color(0.0f, 0, 0, 0.0f));
         attr.setBorderColor(new Color(0, 1.0f, 0, 1.0f));
         attr.setCornerRadius(0);
-        attr.setImageSource("src\\resource\\annotation.png");
+
+        String annotationFilePath;
+        //判断程序是在netbeans环境下，还是在编译好的jar包中。通过判断src文件夹是否存在来判断
+        File src = new File("src");
+        if (src.exists()) {
+            annotationFilePath = "src\\resource\\annotation.png";
+        } else {
+//            String str = ActiveLayersPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+//            str = str.substring(0, str.lastIndexOf("/") + 1);
+//            annotationFilePath = str + "resource/annotation.png";
+//            JOptionPane.showMessageDialog(null, annotationFilePath, "消息提示", JOptionPane.ERROR_MESSAGE);
+            annotationFilePath =  "resource\\annotation.png";
+        }
+        attr.setImageSource(annotationFilePath);
         attr.setLeader(AVKey.SHAPE_NONE);
         attr.setSize(new Dimension(150, 110));
         annotation.setAttributes(attr);

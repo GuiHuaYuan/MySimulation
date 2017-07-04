@@ -111,7 +111,7 @@ public class Access {
         String path;
         int totalNode = 0;
         
-        totalNode = Geometry2Grid(ai, odc);//对输入的Geometry进行采样，返回地面任务区域的总点数
+        totalNode = Geometry2GridNew(ai, odc);//对输入的Geometry进行采样，返回地面任务区域的总点数
         ao.totalGrid = totalNode;
         System.out.println("采样结束");
         
@@ -207,7 +207,6 @@ public class Access {
                         }
                     }
                 }
-
                 //如果每天覆盖的点数大于最大覆盖点数，则计算有效覆盖次数时，将乘以“最大能力修正系数”
                 totalGridOneDay = totalGridOneDay <= 0 ? 1 : totalGridOneDay;
                 float maxGridPerDayRate = (float) maxGridPerDay / totalGridOneDay;
@@ -254,7 +253,8 @@ public class Access {
                     if (effectiveTimesGrid[i][j] >= 1.0f) {
                         progress += 1.0f;
                     } else {
-                        progress += effectiveTimesGrid[i][j];
+                        //progress += effectiveTimesGrid[i][j];
+                        progress += 0;//有效覆盖次数不足一次，则忽略
                     }
                 }
             }
@@ -300,27 +300,26 @@ public class Access {
 
         }
         ao.isSuccess = true;
-//        System.out.println("计算结束");
-        for (int i = 0; i < ao.timeNodeArray.length; i++) {
-            String s = String.format("%s\t%.1f%%", ao.timeNodeArray[i], 100 * ao.progressArray[i]);
-            System.out.println(s);
-        }
-
+        System.out.println("计算结束");
+        
+        //输出覆盖进度
+//        for (int i = 0; i < ao.timeNodeArray.length; i++) {
+//            String s = String.format("%s\t%.1f%%", ao.timeNodeArray[i], 100 * ao.progressArray[i]);
+//            System.out.println(s);
+//        }
 
 //        stat(odc.chinaGrid);
 
- 
-        float ttf = 0;
-        for (int i = 0; i < 800; i++) {
-            for (int j = 0; j < 1400; j++) {
-                if (odc.chinaGrid[i][j] > -9) {
-                    float f1 = effectiveTimesGrid[i][j] >= 1 ? 1 : effectiveTimesGrid[i][j];
-//                    f1 = (f1 < 0.5 ? 0 : f1);
-                    ttf += f1;
-                }
-            }
-        }
-        System.out.println(ttf * 25.0f / 10000);
+//        float ttf = 0;
+//        for (int i = 0; i < 800; i++) {
+//            for (int j = 0; j < 1400; j++) {
+//                if (odc.chinaGrid[i][j] > -9) {
+//                    float f1 = effectiveTimesGrid[i][j] >= 1 ? 1 : effectiveTimesGrid[i][j];
+//                    ttf += f1;
+//                }
+//            }
+//        }
+//        System.out.println(ttf * 25.0f / 10000);
 
 //        System.out.println(JSON.toJSONString(ao));
 //        getResult(odc, cloudDataBase, MonthXunStart[0], MonthXunStart[1], MonthXunEnd[0], MonthXunEnd[1], totalNode);
@@ -328,34 +327,7 @@ public class Access {
         
         return effectiveTimesGrid;
     }
-    
-    
-    
-    
-    /*
-    
-    
-                
-    
-    
-    
-    
-    
-    
-    
-    
-    */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
     
     //本函数用于计算用户设置时间段之间的所有时间节点，每隔1旬获取一个时间节点，用于计算该旬的任务情况
     //例如：用户设置任务起止时间是2015-10-05 ~ 2015-11-17
@@ -510,6 +482,101 @@ public class Access {
         return cumulationTimes;
     }
     
+    private static int Geometry2GridNew(AccessInput ai, OneDayCoverage odc) {
+        //先把全国的点值初始化为-10
+        for (int i = 0; i < 800; i++) {
+            for (int j = 0; j < 1400; j++) {
+                odc.chinaGrid[i][j] = -10;
+                odc.chinaOneDayGrid[i][j] = -10;
+            }
+        }
+
+        MultiPolygon mp = (MultiPolygon) ai.target;
+        int number = mp.getNumGeometries();
+        //获取mp的外接矩形，把全国的区域缩小到外接矩形，在判断外接矩形内的点和目标区域的关系
+        for (int num = 0; num < number; num++) {//将目标区域内的feature一个一个的处理
+            Geometry geoINmp = mp.getGeometryN(num);
+            Geometry geoINmpEn = geoINmp.getEnvelope(); //获取目标区域中每一个目标区域的外接矩形，一个矩形一个矩形的处理，减少不必要的计算。
+            //Geometry mpEn=mp.getEnvelope();//获取目标区域的外接矩形,如何获取单独目标的外接矩形for//这个是对所有目标区域的
+            Coordinate[] coorEn = geoINmpEn.getCoordinates();//共有五对坐标点，左下角coorEn[0]、coorEn[4]，左上角coorEn[1]，右上角coorEn[2]，右下角coorEn[3].
+            GeometryFactory gf = new GeometryFactory();
+            double[] LonLat = new double[2];
+            int[] GridXY = new int[2];
+
+            double[][] LonLatEn = new double[2][2];
+            int[][] GridXYEn = new int[2][2];
+
+            //左下角的经纬度值最小，右上角的经纬度最大，故取这两点的经纬度值便可确定此外接矩形框的范围，例如选择整个北京的区域范围
+            LonLatEn[0][0] = coorEn[0].x / Math.PI * 180.f;//115°
+            LonLatEn[0][1] = coorEn[0].y / Math.PI * 180.f;//39°
+            LonLatEn[1][0] = coorEn[2].x / Math.PI * 180.f;//117°
+            LonLatEn[1][1] = coorEn[2].y / Math.PI * 180.f;//41°
+
+            OverlapFun.LonLat2GridXY(LonLatEn[0], GridXYEn[0]);
+            OverlapFun.LonLat2GridXY(LonLatEn[1], GridXYEn[1]);
+
+            //从外接矩形开始判断
+            for (int i = GridXYEn[1][1]; i <= GridXYEn[0][1]; i += 20) {
+                for (int j = GridXYEn[0][0]; j <= GridXYEn[1][0]; j += 20) {
+                    // 1个网格点代表0.05经纬度，以20个网格点（1经纬度）为一个步进，判断所在的正方形与地面任务区域的相交情况
+                    Coordinate[] coor = new Coordinate[5];
+                    GridXY[0] = j;
+                    GridXY[1] = i;
+                    OverlapFun.GridXY2LonLat(GridXY, LonLat);//将目前的格网编号转换成对应的经纬度
+                    coor[0] = new Coordinate(LonLat[0] * Math.PI / 180.0f, LonLat[1] * Math.PI / 180.0f);//左上角
+                    coor[4] = new Coordinate(LonLat[0] * Math.PI / 180.0f, LonLat[1] * Math.PI / 180.0f);//左上角
+                    GridXY[0] = j + 20;
+                    GridXY[1] = i;
+                    OverlapFun.GridXY2LonLat(GridXY, LonLat);
+                    coor[1] = new Coordinate(LonLat[0] * Math.PI / 180.0f, LonLat[1] * Math.PI / 180.0f);//右上角
+                    GridXY[0] = j + 20;
+                    GridXY[1] = i + 20;
+                    OverlapFun.GridXY2LonLat(GridXY, LonLat);
+                    coor[2] = new Coordinate(LonLat[0] * Math.PI / 180.0f, LonLat[1] * Math.PI / 180.0f);//右下角
+                    GridXY[0] = j;
+                    GridXY[1] = i + 20;
+                    OverlapFun.GridXY2LonLat(GridXY, LonLat);
+                    coor[3] = new Coordinate(LonLat[0] * Math.PI / 180.0f, LonLat[1] * Math.PI / 180.0f);//左下角
+                    Geometry poly = gf.createPolygon(coor);//根据五个点画了一个正方形
+                    if (poly.within(geoINmp)) {
+                        //如果正方形位于地面任务区域内部，则正方形内的点均位于地面任务区域内部
+                        for (int di = 0; di < 20; di++) {
+                            for (int dj = 0; dj < 20; dj++) {
+                                odc.chinaGrid[i + di][j + dj] = 0;//把所有在目标区域内部点都重新赋值为0
+                                odc.chinaOneDayGrid[i + di][j + dj] = 0;
+                            }
+                        }
+                    } else if (poly.intersects(geoINmp)) {
+                        //如果正方形与地面任务区域相交，则需依次判断正方形内部的点与地面任务区域的关系
+                        for (int di = 0; di < 20; di++) {
+                            for (int dj = 0; dj < 20; dj++) {
+                                GridXY[0] = j + dj;
+                                GridXY[1] = i + di;
+                                OverlapFun.GridXY2LonLat(GridXY, LonLat);
+                                Coordinate coor1 = new Coordinate(LonLat[0] * Math.PI / 180.0, LonLat[1] * Math.PI / 180.0);
+                                Point p = gf.createPoint(coor1);
+                                if (geoINmp.contains(p)) {//mp是目标区域
+                                    odc.chinaGrid[i + di][j + dj] = 0;
+                                    odc.chinaOneDayGrid[i + di][j + dj] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //统计地面任务区域网格点总数
+        int totalGrid = 0;
+        for (int i = 0; i < 800; i++) {
+            for (int j = 0; j < 1400; j++) {
+                if (odc.chinaGrid[i][j] == 0) {
+                    totalGrid++;
+                }
+            }
+        }
+        return totalGrid;
+    }
+    
     //快速采样函数
     private static int Geometry2Grid(AccessInput ai, OneDayCoverage odc) {
         MultiPolygon mp = (MultiPolygon) ai.target;
@@ -629,79 +696,5 @@ public class Access {
         }
         g2d.dispose();
         return bt;
-        
-/*
-        int width = 700;
-        int height = 400;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
-        Graphics2D g2d = image.createGraphics();
-
-        Color color1 = new Color(0, 255, 0, 128);
-        Color color2 = new Color(255, 255, 0, 128);
-        Color color3 = new Color(0, 0, 255, 128);
-        Color color4 = new Color(255, 0, 0, 128);
-
-        for (int i = 0; i < 800; i++) {
-            for (int j = 0; j < 1400; j++) {
-                if (i % 2 == 0 && j % 2 == 0 && chinaGrid[i][j] != -10) {
-                    if (effectiveTimesGrid[i][j] < 0.5f) {
-                        g2d.setColor(color4);
-                    } else if (effectiveTimesGrid[i][j] < 1.0f) {
-                        g2d.setColor(color3);
-                    } else if (effectiveTimesGrid[i][j] < 1.5f) {
-                        g2d.setColor(color2);
-                    } else {
-                        g2d.setColor(color1);
-                    }
-                    g2d.fillRect(j / 2, i / 2, 2, 2);
-                }
-            }
-        }
-        byte[] bt = null;
-        try {
-            ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", bout);
-            bt = bout.toByteArray();
-            ByteArrayInputStream bin = new ByteArrayInputStream(bt);
-            image = ImageIO.read(bin);
-//            ImageIO.write(image, "png", new File("E:\\桌面\\b.png"));
-//            System.out.println("");
-        } catch (Exception ex) {
-            System.out.println("生成PNG图片失败");
-        }
-        g2d.dispose();
-        return bt;
-        */
     }
 }
-
-//class XYindex implements Comparable<XYindex> {
-//    int x;
-//    int y;
-//    static int dataGrid[][] = null;
-//    public XYindex(int x, int y) {
-//        this.x = x;
-//        this.y = y;
-//    }
-//    @Override
-//    public int compareTo(XYindex xy) {
-//        if (dataGrid[this.x][this.y] > dataGrid[xy.x][xy.y]) {
-//            return 1;
-//        } else if (dataGrid[this.x][this.y] == dataGrid[xy.x][xy.y]) {
-//            return 0;
-//        } else {
-//            return -1;
-//        }
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
-

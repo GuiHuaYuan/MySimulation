@@ -75,7 +75,6 @@ public class Point2Xian {
         
         //至此，regionUnit存放输出单位，codeList存放行政代码列表
 
-
         Collections.sort(codeList);
         int codeListSize = codeList.size();
         RegionEntry[] regionEntryArray = new RegionEntry[codeListSize];
@@ -104,7 +103,8 @@ public class Point2Xian {
                         if (EffectiveGrid[i][j] > -9) {
                             //如果第i行第j列的EffectiveGrid不等于-10，即位于地面任务区域内部，则：
                             regionEntryArray[k].groundTaskRegionTotalPoint++;
-                            regionEntryArray[k].coverageTimes+=EffectiveGrid[i][j];
+                            //regionEntryArray[k].coverageTimes += EffectiveGrid[i][j];
+                            regionEntryArray[k].coverageTimes += EffectiveGrid[i][j] >= 1.0f ? 1.0f : 0;
                         }
                         break;
                     }

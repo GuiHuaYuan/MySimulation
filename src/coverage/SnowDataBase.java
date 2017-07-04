@@ -69,8 +69,14 @@ public class SnowDataBase {
             OverlapFun.LonLat2GridXY(LonLat, GridXY);
             if (0 + 3 <= GridXY[1] && GridXY[1] <= 800 - 3 && 0 + 3 <= GridXY[0] && GridXY[0] <= 1400 - 3) {
                 int b = (sr.snowArray[index]) == true ? 1 : 0;
-                if(b==1)
-                {
+                if (sr.snowArray[0] == true && sr.snowArray[1] == true && sr.snowArray[2] == true && sr.snowArray[3] == true
+                        && sr.snowArray[4] == true && sr.snowArray[5] == true && sr.snowArray[6] == true && sr.snowArray[7] == true
+                        && sr.snowArray[8] == true && sr.snowArray[9] == true && sr.snowArray[10] == true && sr.snowArray[11] == true) {
+                    b = 0;//终年积雪区认为无雪
+//                    System.out.println("znjx");
+                }
+
+                if (b == 1) {
 //                    System.out.println(b);
                 }
                 for (int m = -2; m <= 2; m++) {
