@@ -125,7 +125,7 @@ public class PdfReporter {
 
             }
   
-            addSubTitle(doc,"二、拍摄时间周期内地面任务区域的预测云量（按旬）");
+            addSubTitle(doc,"二、拍摄时间周期内地面任务区域的平均云量（按旬）");
 
             /////////////////////////            第2部分 云量      ///////////////////////// 
             pdfpic.yArray = new float[len];

@@ -253,8 +253,8 @@ public class Access {
                     if (effectiveTimesGrid[i][j] >= 1.0f) {
                         progress += 1.0f;
                     } else {
-                        //progress += effectiveTimesGrid[i][j];
-                        progress += 0;//有效覆盖次数不足一次，则忽略
+                        progress += effectiveTimesGrid[i][j];
+//                        progress += 0;//有效覆盖次数不足一次，则忽略
                     }
                 }
             }
